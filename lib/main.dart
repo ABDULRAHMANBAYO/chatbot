@@ -46,42 +46,49 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Expanded(child: userMessage(context)),
               Expanded(child: responseMessage(context)),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: TextFormField(
-                          controller: sentmessage,
-                          decoration: InputDecoration(
-                              hintText: "Enter message",
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black12),
-                                  borderRadius: BorderRadius.circular(20))))),
-                  IconButton(icon: Icon(Icons.send), onPressed: _submit)
-                ],
-              )
+              enterMessage(context),
             ],
           ),
         ));
   }
-}
 
-Widget userMessage(BuildContext context) {
-  return Row(
-    children: <Widget>[
-      Container(
-        margin: EdgeInsets.only(left: 300.0),
-        child: Text("How are you???"),
-      )
-    ],
-  );
-}
+  Widget userMessage(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 300.0),
+          child: Text("How are you???"),
+          decoration: new BoxDecoration(color: Colors.blueAccent),
+        )
+      ],
+    );
+  }
 
-Widget responseMessage(BuildContext context) {
-  return Row(
-    children: <Widget>[
-      Container(
-          margin: EdgeInsets.only(right: 100.0),
-          child: Text("I am fine,how are you? "))
-    ],
-  );
+  Widget responseMessage(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(right: 80.0),
+          child: Text("I am fine,how are you?"),
+          decoration: new BoxDecoration(color: Colors.blueGrey),
+        )
+      ],
+    );
+  }
+
+  Widget enterMessage(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+            child: TextFormField(
+                controller: sentmessage,
+                decoration: InputDecoration(
+                    hintText: "Enter message",
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(20))))),
+        IconButton(icon: Icon(Icons.send), onPressed: _submit)
+      ],
+    );
+  }
 }
