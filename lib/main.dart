@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 
 void main() => runApp(MyApp());
@@ -27,11 +29,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //final List<ChatMessage> _messages = new List();
+  final List _messages = new List();
+  var message="How are you";
   final TextEditingController sentmessage = TextEditingController();
 
   _submit() {
     debugPrint(sentmessage.text);
+  setState(() {
+     message = sentmessage.text;
+  });
+    _messages.add(sentmessage.text);
+    print("Element in the array:$_messages");
+    _messages.clear();
     sentmessage.clear();
   }
 
@@ -57,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(left: 300.0),
-          child: Text("How are you???"),
+          child: Text(message),
           decoration: new BoxDecoration(color: Colors.blueAccent),
         )
       ],
@@ -69,7 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
       children: <Widget>[
         Container(
           margin: EdgeInsets.only(right: 80.0),
-          child: Text("I am fine,how are you?"),
+          //child:ListTile(),
+          child: Text("I am fine and You???"),
           decoration: new BoxDecoration(color: Colors.blueGrey),
         )
       ],
