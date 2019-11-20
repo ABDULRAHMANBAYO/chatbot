@@ -14,16 +14,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Chat bot'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+  MyHomePage({Key key,}) : super(key: key);
+  
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -36,15 +34,18 @@ class _MyHomePageState extends State<MyHomePage> {
   final userMessageController = TextEditingController();
 
   _submit() {
-      message = userMessageController.text;
-      _userMessages.add(message);
+      
      //print(_userMessages); 
-     userMessageController.clear();
+     
+    
    setState(() {
     
-      
+      message = userMessageController.text;
+      _userMessages.add(message);
+      userMessageController.clear();
       
     }); 
+     response(message);
   }
 
   @override
@@ -89,10 +90,36 @@ class _MyHomePageState extends State<MyHomePage> {
         ))
       ],
     );
+    final botMessage = Row(
+      children: <Widget>[
+        new Expanded(
+            child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: _responseMessage.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                elevation: 4.0,
+                margin: EdgeInsets.only(right: 80.0),
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: new ListTile(
+                    title: Text(_responseMessage[index]),
+                  ),
+                )
+                //decoration: new BoxDecoration(color: Colors.blueAccent),
+                );
+          },
+        ))
+      ],
+    );
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Chat Bot"),
       ),
       body: SingleChildScrollView(
           child: Container(
@@ -104,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             userMessage,
+            botMessage,
             Expanded(
               flex: 1,
               child:Padding(
@@ -135,16 +163,30 @@ class _MyHomePageState extends State<MyHomePage> {
   //   ]);
   // }
 
-  Widget responseMessage(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(right: 80.0),
-          //child:ListTile(),
-          child: Text("I am fine and You???"),
-          decoration: new BoxDecoration(color: Colors.blueGrey),
-        )
-      ],
-    );
-  }
+  // Widget responseMessage(BuildContext context) {
+  //   return Row(
+  //     children: <Widget>[
+  //       Container(
+  //         margin: EdgeInsets.only(right: 80.0),
+  //         //child:ListTile(),
+  //         child: Text(botResponse),
+  //         decoration: new BoxDecoration(color: Colors.blueGrey),
+  //       )
+  //     ],
+  //   );
+  // }
+  void response(query) async {
+  AuthGoogle authGoogle = await AuthGoogle(fileJson: "assets/credentials.json").build();
+  Dialogflow dialogflow = Dialogflow(authGoogle: authGoogle,language: Language.english);
+  AIResponse response = await dialogflow.detectIntent(message);
+  setState(() {
+    _responseMessage.add(response.getMessage());
+  });
+  print(response.getMessage());
+
+  
+   }
 }
+ 
+
+
