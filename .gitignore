@@ -1,8 +1,7 @@
 #Google Cloud Platform Details
-*.credentials.json/
-?\
+**/Users/sultan/Desktop/chatbot/assets/credentials.json
 #FLutter iOS environment
-*.flutter_export_environment.sh/
+**/Users/sultan/Desktop/chatbot/ios/Flutter/flutter_export_environment.sh
 
 # Miscellaneous
 *.class
