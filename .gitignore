@@ -1,3 +1,9 @@
+#Google Cloud Platform Details
+*.credentials.json/
+?\
+#FLutter iOS environment
+*.flutter_export_environment.sh/
+
 # Miscellaneous
 *.class
 *.log
