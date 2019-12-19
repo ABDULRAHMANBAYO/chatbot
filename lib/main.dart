@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List _userMessages = new List();
   final List _responseMessage = new List();
-  final List _messages = new List();
+ // final List _messages = new List();
   var message = "hi";
   final userMessageController = TextEditingController();
 
